@@ -1,9 +1,6 @@
-/**
- * Erstelle dein Programm über Blockly und
- * klicke auf 'Play', um es auszuführen!
- */
+package b2j.test;
 
-public class Main {
+public class MockMain {
     /**
      * Das Hauptprogramm (main-Methode):
      * Alles, was ausgeführt werden soll,

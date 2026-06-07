@@ -50,47 +50,46 @@ public class MainWrapper<T> extends ClassWrapper<T>
                 this,
                 "aufgabe3",
                 String.class,
+                new Class<?>[] {String[].class},
                 "public",
                 "static"
             );
-        aufgabe3.addParameter("String[]", "arr");
 
         aufgabe4 = new MethodWrapper<>(
                 this,
                 "aufgabe4",
                 int.class,
+                new Class<?>[] {int[].class},
                 "public",
                 "static"
             );
-        aufgabe4.addParameter("int[]", "arr");
 
         aufgabe5 = new MethodWrapper<>(
                 this,
                 "aufgabe5",
                 void.class,
+                new Class<?>[] {String[].class},
                 "public",
                 "static"
             );
-        aufgabe5.addParameter("String[]", "arr");
 
         aufgabe6 = new MethodWrapper<>(
                 this,
                 "aufgabe6",
                 int[].class,
+                new Class<?>[] {int[].class},
                 "public",
                 "static"
             );
-        aufgabe6.addParameter("int[]", "arr");
 
         aufgabe7 = new MethodWrapper<>(
                 this,
                 "aufgabe7",
                 int.class,
+                new Class<?>[] {int[].class},
                 "public",
                 "static"
             );
-        aufgabe7.addParameter("int[]", "arr");
-        
     }
 
     @Override
