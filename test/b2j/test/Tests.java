@@ -13,7 +13,20 @@ public class Tests {
     static MainWrapper<?> main = new MainWrapper<>();
 
     public static void testMain() {
-        main.main().invoke();
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream originalOut = System.out;
+        System.setOut(new java.io.PrintStream(outContent));
+        try {
+            main.main().invoke();
+        } catch (Exception e) {
+            fail(e.getMessage());
+        } finally {
+            System.setOut(originalOut);
+        }
+        String output = outContent.toString().trim();
+        if (output.equals("null") || output.isEmpty()) {
+            fail("Die main-Methode wurde noch nicht angepasst oder gibt null aus.");
+        }
     }
 
     static Random ran = new Random();
@@ -47,6 +60,11 @@ public class Tests {
 
         if (actual.length != expected.length) {
             String msg = "Die Länge des Arrays ist nicht korrekt. [e80a2fc0b9]";
+            if (exerciseNr == 1) {
+                errMsgBuilder.add(msg +
+                        "\nEs müssen genau 3 Elemente sein (1,2,3).");
+                generateErrMsg(errMsgBuilder);
+            }
             if (exerciseNr == 2) {
                 errMsgBuilder.add(msg +
                         "\nEs müssen genau 11 Elemente sein (2^0 bis 2^10).");
@@ -173,7 +191,7 @@ public class Tests {
 
         String actual = null;
         try {
-            actual = (String) main.aufgabe3().invoke(array);
+            actual = (String) main.aufgabe3().invoke((Object) array);
         } catch (IndexOutOfBoundsException e) {
             fail("Du versuchst auf einen Index zuzugreifen, den es im Array nicht gibt. [231dec504f]" +
                     "\nDer kleinste verfügbare Index ist 0, der größte 'arr.length - 1'");
@@ -232,12 +250,22 @@ public class Tests {
             fail("Voraussetzungen nicht erfüllt. [a45b5f71de]");
         }
 
-        String[] array = new String[]{"5", "3", "7"};
+        String[] array = new String[]{"y", "a", "y"};
 
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream originalOut = System.out;
+        System.setOut(new java.io.PrintStream(outContent));
         try {
-            main.aufgabe5().invoke(array);
+            main.aufgabe5().invoke((Object) array);
         } catch (Exception e) {
             fail(e.getMessage());
+        } finally {
+            System.setOut(originalOut);
+        }
+        String output = outContent.toString().trim().replace("\r\n", "\n");
+        if (!output.equals("y\na\ny")) {
+            fail("Die Methode aufgabe5 hat nicht die erwarteten Ausgaben auf der Konsole ausgegeben. [5a2ef39d8b]" +
+                    "\nErwartet:\ny\na\ny\nAusgegeben:\n" + output);
         }
     }
 
@@ -255,8 +283,8 @@ public class Tests {
             array[i] = x;
         }
 
-        int[] actual = (int[]) main.aufgabe6().invoke(array);
         int[] expected = MockMain.aufgabe6(array.clone());
+        int[] actual = (int[]) main.aufgabe6().invoke((Object) array);
 
         if (actual == null) {
             fail("Aufgabe wurde noch nicht bearbeitet.");
@@ -271,14 +299,19 @@ public class Tests {
         }
         int[] array = new int[0];
 
-        int[] actual = (int[]) main.aufgabe6().invoke(array);
         int[] expected = MockMain.aufgabe6(array.clone());
+        int[] actual = (int[]) main.aufgabe6().invoke((Object) array);
 
         if (actual == null) {
             fail("Aufgabe wurde noch nicht bearbeitet.");
         }
 
         compareArrays(actual, expected, 6);
+
+        int[] array2 = new int[]{5};
+        int[] expected2 = MockMain.aufgabe6(array2.clone());
+        int[] actual2 = (int[]) main.aufgabe6().invoke((Object) array2);
+        compareArrays(actual2, expected2, 6);
     }
 
     static void testA7() {
@@ -310,7 +343,7 @@ public class Tests {
         if (expected != actual) {
             fail("Die Summe aller Elemente des Arrays wird nicht korrekt zurückgegeben. [43038fa243]" +
                     "\nGib die Summe aller Elemente im Array zurück. Hierfür brauchst du eine For-Schleife: \n" +
-                    "int summe = 0;\nfor(int i=0; i<array.length; i++) {\n    summe += array[i];\n}");
+                    "int summe = 0;\nfor(int i=0; i<array.length; i++) {\n    summe = summe + array[i];\n}");
         }
     }
 }
