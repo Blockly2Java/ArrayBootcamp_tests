@@ -46,7 +46,7 @@ public class Main {
 
     public static int[] aufgabe6(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = 2 * arr[0];
+            arr[i] = 2 * arr[i];
         }
         return arr;
     }
