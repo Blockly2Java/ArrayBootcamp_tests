@@ -51,7 +51,7 @@ The **package structure of test classes must match** the package structure of th
 When forking this repo for a new exercise (e.g., `{exercise}_tests`), update the following:
 
 1. **`pom.xml`** — Change:
-   - `artifactId` (e.g., `template_tests` → `myexercise_tests`)
+   - `artifactId` (e.g., `arraybootcamp_tests` → `myexercise_tests`)
    - `<name>`, `<description>`, and `<url>` in both root and `<scm>`
 2. **Wrappers** (`test/b2j/wrappers/`) — Rename/recreate to match your student classes. Each extends `ClassWrapper<T>` and declares expected class name, package, and modifiers.
 3. **Test methods** (`test/b2j/test/Tests.java`) — Replace with your test logic referencing your wrappers.
